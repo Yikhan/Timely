@@ -1,9 +1,9 @@
 <template>
   <div class="widget">
     <div class="switchBlock">
-      <Switch class="switch" size="large">
-        <span slot="open">Mon</span>
-        <span slot="close">Mon</span>
+      <Switch class="switch" size="large" v-show="defaultRow">
+        <span slot="open">{{currentDay}}</span>
+        <span slot="close">{{currentDay}}</span>
       </Switch>
     </div>
     <div class="timeBlock">
@@ -24,7 +24,8 @@ export default {
     TimeRow
   },
   props: {
-
+    currentDay: String,
+    defaultRow: Boolean
   },
   data () {
     return {
@@ -36,7 +37,7 @@ export default {
 
 <style lang="stylus" scoped>
   .widget
-    margin-top 120px
+    margin-top 20px
     display flex
     justify-content center
     align-items center
