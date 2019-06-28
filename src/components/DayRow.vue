@@ -1,18 +1,18 @@
 <template>
   <div class="widget">
-    <Row type="flex" justify="center">
-      <Col span="6">
-        <Switch class="switch" size="large">
-          <span slot="open">Mon</span>
-          <span slot="close">Mon</span>
-        </Switch>
-      </Col>
-      <Col span="8">
-        <time-row></time-row>
-        <Button size="small" type="success" icon="ios-time">new</Button>
-        <Button size="small" type="error" icon="md-trash">delete</Button>
-      </Col>
-    </Row>
+    <div class="switchBlock">
+      <Switch class="switch" size="large">
+        <span slot="open">Mon</span>
+        <span slot="close">Mon</span>
+      </Switch>
+    </div>
+    <div class="timeBlock">
+      <time-row></time-row>
+    </div>
+    <div class="buttonBlock">
+      <Button size="small" type="success" icon="ios-time">new</Button>
+      <Button size="small" type="error" icon="md-trash">del</Button>
+    </div>
   </div>
 </template>
 
@@ -35,6 +35,22 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
+  .widget
+    margin-top 120px
+    display flex
+    justify-content center
+    align-items center
+    .switchBlock
+      width 10vw
+      display flex
+      justify-content center
+    .timeBlock
+      width 30vw
+      display flex
+      justify-content center
+    .buttonBlock
+      width 12vw
+      display flex
+      justify-content space-around
 
 </style>
