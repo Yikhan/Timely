@@ -39,7 +39,8 @@ export default {
         handleAddNewPeriod () {
             let data = this.periodsOfDay
             let period = new Period(this.currentDay, false)
-            period.setIndex(++this.id) // index of default row is 0, which can not be deleted
+            // index of default row is 0, which can not be deleted
+            period.setIndex(++this.id)
             data.push(period)
         },
         handleDeletePeriod (index) {
@@ -68,7 +69,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-
 .list-item 
   transition all 0.5s
 .list-enter, .list-leave-to
