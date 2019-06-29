@@ -22,7 +22,9 @@
       :disabled="muted"
       @on-open-change="validate"
       ></TimePicker>
+      <span class="alert"><Icon type="md-alert" size="15" v-show="error" /></span>
     </div>
+    
 
     <div class="buttonBlock">
       <Button size="small" type="success" icon="ios-time" 
@@ -54,7 +56,8 @@ export default {
 
   data () {
     return {
-      muted: false
+      muted: false,
+      error: false
     }
   },
 
@@ -74,15 +77,15 @@ export default {
     validate (status) {
         if (!status) { // if date picker is on blur 
           try {
-            Validator.validate(this.period)
-
-          } 
+              Validator.validate(this.period)
+              this.error = false
+            } 
           catch (e) {
-            console.log("Error: " + e)
-            this.$Notice.error({
-              title: 'Time Error',
-              desc: e
-            })
+              this.$Notice.error({
+                title: 'Time Error',
+                desc: e.error
+              })
+              this.error = true
           }
         }
     }
@@ -92,7 +95,7 @@ export default {
 
 <style lang="stylus" scoped>
   .widget
-    margin 2vh 10vh 0 10vh
+    margin 2vh 15vh 0 15vh
     display flex
     justify-content center
     align-items center
@@ -106,8 +109,11 @@ export default {
       justify-content space-around
       .timePicker
         width 40%
+      .alert
+        width 15px
+        color red
     .buttonBlock
-      width 12vw
+      width 8vw
       display flex
       justify-content space-around
 
