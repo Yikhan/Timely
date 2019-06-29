@@ -14,11 +14,13 @@
       <TimePicker class="timePicker" format="HH:mm" placeholder="Start time"
       v-model="period.startTime"
       :disabled="muted"
+      @on-open-change="validate"
       ></TimePicker>   
       
       <TimePicker class="timePicker" format="HH:mm" placement="bottom-end" placeholder="End time"
       v-model="period.endTime" 
       :disabled="muted"
+      @on-open-change="validate"
       ></TimePicker>
     </div>
 
@@ -37,6 +39,7 @@
 </template>
 
 <script>
+import Validator from '@/validation/validation'
 
 export default {
   name: 'DayRow',
@@ -67,6 +70,21 @@ export default {
       this.$emit('changeRowStatus', status)
       // mute other parts of the widget or activate them
       this.muted = !status
+    },
+    validate (status) {
+        if (!status) { // if date picker is on blur 
+          try {
+            Validator.validate(this.period)
+
+          } 
+          catch (e) {
+            console.log("Error: " + e)
+            this.$Notice.error({
+              title: 'Time Error',
+              desc: e
+            })
+          }
+        }
     }
   }
 }
@@ -74,7 +92,7 @@ export default {
 
 <style lang="stylus" scoped>
   .widget
-    margin-top 20px
+    margin 2vh 10vh 0 10vh
     display flex
     justify-content center
     align-items center
