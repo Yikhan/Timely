@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <week-row></week-row>
+    <week></week>
   </div>
 </template>
 
 <script>
-import WeekRow from '@/components/WeekRow'
+import Week from '@/components/Week'
 
 export default {
   name: "App",
   components: {
-    WeekRow
+    Week
   }
 }
 </script>
