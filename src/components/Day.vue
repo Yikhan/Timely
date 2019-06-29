@@ -1,12 +1,14 @@
 <template>
     <div>
-        <day-row
-        v-for="(period, index) in periodsOfDay"
-        :key="index"
-        :period="period"
-        @addNewPeriod="handleAddNewPeriod"
-        @deletePeriod="handleDeletePeriod"
-        ></day-row>
+        <transition-group name="list">
+            <day-row class="list-item"
+            v-for="period in periodsOfDay"
+            :key="period.index"
+            :period="period"
+            @addNewPeriod="handleAddNewPeriod"
+            @deletePeriod="handleDeletePeriod"
+            ></day-row>
+        </transition-group>
     </div>
 </template>
 
@@ -34,8 +36,8 @@ export default {
     methods: {
         handleAddNewPeriod () {
             let data = this.periodsOfDay
-            let period = new Period(false)
-            period.index = ++this.id // 默认行的index为0 不可删除
+            let period = new Period(this.currentDay, false)
+            period.setIndex(++this.id) // 默认行的index为0 不可删除
             data.push(period)
         },
         handleDeletePeriod (index) {
@@ -45,7 +47,7 @@ export default {
     },
 
     mounted () {
-        this.periodsOfDay.push(new Period(true))
+        this.periodsOfDay.push(new Period(this.currentDay, true))
     }
 
 }
@@ -53,4 +55,9 @@ export default {
 
 <style lang="stylus" scoped>
 
+.list-item 
+  transition all 0.5s
+.list-enter, .list-leave-to
+  opacity 0
+  transform translateX(10px)
 </style>

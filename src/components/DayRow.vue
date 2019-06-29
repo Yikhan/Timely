@@ -1,7 +1,7 @@
 <template>
   <div class="widget">
     <div class="switchBlock">
-      <Switch class="switch" size="large" 
+      <Switch class="switch" size="large" :value="true"
       v-show="period.defaultRow">
         <span slot="open">{{period.currentDay}}</span>
         <span slot="close">{{period.currentDay}}</span>
