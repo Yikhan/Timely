@@ -5,8 +5,10 @@
             v-for="period in periodsOfDay"
             :key="period.index"
             :period="period"
+            v-show="!period.hide"
             @addNewPeriod="handleAddNewPeriod"
             @deletePeriod="handleDeletePeriod"
+            @changeRowStatus="handleChangeRowStatus"
             ></day-row>
         </transition-group>
     </div>
@@ -37,12 +39,24 @@ export default {
         handleAddNewPeriod () {
             let data = this.periodsOfDay
             let period = new Period(this.currentDay, false)
-            period.setIndex(++this.id) // 默认行的index为0 不可删除
+            period.setIndex(++this.id) // index of default row is 0, which can not be deleted
             data.push(period)
         },
         handleDeletePeriod (index) {
             let data = this.periodsOfDay
             data.splice(data.findIndex(p => p.index === index), 1)
+        },
+        handleChangeRowStatus (status) {
+            // mute the widget (all periods of that day) if the switch is off
+            if (!status) {
+                this.periodsOfDay.forEach( p => {
+                    if (!p.defaultRow) p.hide = true
+                })
+            } else {
+                this.periodsOfDay.forEach( p => {
+                    if (!p.defaultRow) p.hide = false
+                })
+            }
         }
     },
 

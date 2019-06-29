@@ -1,20 +1,33 @@
 <template>
   <div class="widget">
     <div class="switchBlock">
-      <Switch class="switch" size="large" :value="true"
-      v-show="period.defaultRow">
+      <Switch class="switch" size="large" 
+      :value="true"
+      v-show="period.defaultRow"
+      @on-change="changeRowStatus">
         <span slot="open">{{period.currentDay}}</span>
         <span slot="close">{{period.currentDay}}</span>
       </Switch>
     </div>
+
     <div class="timeBlock">       
-      <TimePicker v-model="period.startTime" class="timePicker" format="HH:mm" placeholder="Start time"></TimePicker>   
-      <TimePicker v-model="period.endTime" class="timePicker" format="HH:mm" placement="bottom-end" placeholder="End time"></TimePicker>
+      <TimePicker class="timePicker" format="HH:mm" placeholder="Start time"
+      v-model="period.startTime"
+      :disabled="muted"
+      ></TimePicker>   
+      
+      <TimePicker class="timePicker" format="HH:mm" placement="bottom-end" placeholder="End time"
+      v-model="period.endTime" 
+      :disabled="muted"
+      ></TimePicker>
     </div>
+
     <div class="buttonBlock">
       <Button size="small" type="success" icon="ios-time" 
       v-show="period.defaultRow" 
-      @click="addNewPeriod">new</Button>
+      :disabled="muted"
+      @click="addNewPeriod"
+      >new</Button>
 
       <Button size="small" type="error" icon="md-trash" 
       v-show="!period.defaultRow" 
@@ -38,7 +51,7 @@ export default {
 
   data () {
     return {
-
+      muted: false
     }
   },
 
@@ -48,6 +61,12 @@ export default {
     },
     deletePeriod () {
       this.$emit('deletePeriod', this.period.index)
+    },
+    changeRowStatus (status) {
+      // send event to parent component to hide rows added by user on this day if switched off
+      this.$emit('changeRowStatus', status)
+      // mute other parts of the widget or activate them
+      this.muted = !status
     }
   }
 }
