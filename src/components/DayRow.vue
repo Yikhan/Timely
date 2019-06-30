@@ -14,13 +14,13 @@
       <TimePicker class="timePicker" format="HH:mm" placeholder="Start time"
       v-model="period.startTime"
       :disabled="muted"
-      @on-open-change="validate"
+      @on-open-change="triggerValidation"
       ></TimePicker>   
       
       <TimePicker class="timePicker" format="HH:mm" placement="bottom-end" placeholder="End time"
       v-model="period.endTime" 
       :disabled="muted"
-      @on-open-change="validate"
+      @on-open-change="triggerValidation"
       ></TimePicker>
       <span class="alert"><Icon type="md-alert" size="15" v-show="error" /></span>
     </div>
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import Validator from '@/validation/validation'
 
 export default {
   name: 'DayRow',
@@ -51,13 +50,17 @@ export default {
       type: Object,
       required: true
     }
-  
   },
 
   data () {
     return {
-      muted: false,
-      error: false
+      muted: false
+    }
+  },
+
+  computed: {
+    error: function () {
+      return !this.period.errorList.length === 0
     }
   },
 
@@ -74,19 +77,9 @@ export default {
       // mute other parts of the widget or activate them
       this.muted = !status
     },
-    validate (status) {
+    triggerValidation (status) {
         if (!status) { // if date picker is on blur 
-          try {
-              Validator.validate(this.period)
-              this.error = false
-            } 
-          catch (e) {
-              this.$Notice.error({
-                title: 'Time Error',
-                desc: e.error
-              })
-              this.error = true
-          }
+          this.$emit('validate', this.period)
         }
     }
   }

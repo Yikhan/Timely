@@ -6,6 +6,7 @@ class Period {
         this.currentDay = currentDay || 'Mon'
         this.defaultRow = defaultRow && true
         this.hide = false
+        this.errorList = [] 
     }
 
     setIndex (index) {

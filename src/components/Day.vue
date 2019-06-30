@@ -9,6 +9,7 @@
             @addNewPeriod="handleAddNewPeriod"
             @deletePeriod="handleDeletePeriod"
             @changeRowStatus="handleChangeRowStatus"
+            @validate="validate"
             ></day-row>
         </transition-group>
     </div>
@@ -17,6 +18,7 @@
 <script>
 import DayRow from './DayRow'
 import Period from '@/model/Period'
+import Validator from '@/validation/validator'
 
 export default {
     name: "Day",
@@ -58,9 +60,23 @@ export default {
                     if (!p.defaultRow) p.hide = false
                 })
             }
+        },
+        validate (period) {
+            console.log('validation!', period)
+            try {
+                period.errorList = []
+                Validator.validate(period)
+                Validator.overlapCheck(period, this.periodsOfDay)
+            } 
+            catch (e) {
+                this.$Notice.error({
+                    title: 'Error',
+                    desc: e.error
+                })
+            }
         }
     },
-
+    
     mounted () {
         this.periodsOfDay.push(new Period(this.currentDay, true))
     }
