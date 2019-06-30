@@ -62,7 +62,6 @@ export default {
             }
         },
         validate (period) {
-            console.log('validation!', period)
             try {
                 period.errorList = []
                 Validator.validate(period)

@@ -22,7 +22,7 @@
       :disabled="muted"
       @on-open-change="triggerValidation"
       ></TimePicker>
-      <span class="alert"><Icon type="md-alert" size="15" v-show="error" /></span>
+      <span class="alert"><Icon type="md-alert" size="15" v-show="!errorStatus" /></span>
     </div>
     
 
@@ -59,8 +59,8 @@ export default {
   },
 
   computed: {
-    error: function () {
-      return !this.period.errorList.length === 0
+    errorStatus: function () {
+      return this.period.errorList.length === 0
     }
   },
 
