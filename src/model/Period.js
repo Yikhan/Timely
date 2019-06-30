@@ -12,7 +12,7 @@ class Period {
         this.index = index
     }
 
-    setTime(startTime, endTime) {
+    setTime (startTime, endTime) {
         this.startTime = startTime,
         this.endTime = endTime
     }

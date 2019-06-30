@@ -9,5 +9,14 @@ module.exports = {
           prefix: false
         })
         .end()
+  },
+
+  css: { 
+    loaderOptions: { 
+      less: {
+          javascriptEnabled: true 
+      }
+    }
   }
+
 }

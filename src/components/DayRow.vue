@@ -103,6 +103,9 @@ export default {
       width 10vw
       display flex
       justify-content center
+    .switch.ivu-switch-checked
+      border-color green
+      background-color green        
     .timeBlock
       width 30vw
       display flex
